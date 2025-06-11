@@ -1,0 +1,62 @@
+From 63d8a9538cc2e781524186eb95fd5a536c8d7c0b Mon Sep 17 00:00:00 2001
+From: ldonth501 <LasyaPrakarsha_DonthiVenkata@comcast.com>
+Date: Wed, 5 Mar 2025 11:33:52 +0000
+Subject: [PATCH] Remove rfc controlled code to switch back to root
+
+---
+ source/app/main.c      | 7 +++++++
+ source/app/privilege.c | 9 +++++++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/source/app/main.c b/source/app/main.c
+index 6fbf5c7..b44f620 100644
+--- a/source/app/main.c
++++ b/source/app/main.c
+@@ -10,6 +10,7 @@
+ #include "webpa_adapter.h"
+ #include "libpd.h"
+ #include "webpa_rbus.h"
++#include "cap.h"
+ #ifdef FEATURE_SUPPORT_WEBCONFIG
+ #include <curl/curl.h>
+ #endif
+@@ -17,6 +18,8 @@
+ #include "breakpad_wrapper.h"
+ #endif
+ 
++extern cap_user appcaps;
++
+ /*----------------------------------------------------------------------------*/
+ /*                             Function Prototypes                            */
+ /*----------------------------------------------------------------------------*/
+@@ -77,6 +80,10 @@ int main()
+ #ifdef FEATURE_SUPPORT_WEBCONFIG
+ curl_global_cleanup();
+ #endif
++    update_process_caps(&appcaps);
++    read_capability(&appcaps);
++    WalInfo("CAP_DAC_OVERRIDE removed\n");
++
+ 	WalInfo("Exiting webpa main thread!!\n");
+ 	return 1;
+ }
+diff --git a/source/app/privilege.c b/source/app/privilege.c
+index d14d6c7..24fff20 100644
+--- a/source/app/privilege.c
++++ b/source/app/privilege.c
+@@ -1,6 +1,15 @@
+ #include "privilege.h"
++#include "webpa_adapter.h"
++#include "cap.h"
++
++cap_user appcaps;
+ 
+ void drop_root_privilege()
+ {
+ 
++    appcaps.caps = NULL;
++    appcaps.user_name = NULL;
++    WalInfo("NonRoot feature is enabled, dropping root privileges for webpa process\n");
++    init_capability();
++    drop_root_caps(&appcaps);
+ }

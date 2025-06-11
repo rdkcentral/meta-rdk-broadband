@@ -1,0 +1,139 @@
+##########################################
+Date: nov 26, 2024 07:12 PM
+From: I64048778a48e1d31887b267a013f30b5fdc7c9ee
+Subject: changes merged to source of 2.10
+Source: COMCAST
+License: BSD
+Upstream-Status: Pending
+Signed-off-by: NarendraVarma Dandu <NarendraVarma_Dandu@comcast.com>
+##########################################
+--- a/source/hostap-2.10/src/ap/ap_drv_ops.c	2024-11-26 14:26:40
++++ b/source/hostap-2.10/src/ap/ap_drv_ops.c	2024-11-25 17:53:41
+@@ -256,6 +256,17 @@ int hostapd_set_ap_wps_ie(struct hostapd_data *hapd)
+ 	return ret;
+ }
+ 
++#ifdef RDK_ONEWIFI
++int hostapd_drv_wps_event_notify_cb(struct hostapd_data *hapd, enum wps_event event,
++                                    union wps_event_data *data)
++{
++	if (!hapd->driver || !hapd->driver->wps_event_notify_cb || !hapd->drv_priv) {
++		return 0;
++	}
++
++	return hapd->driver->wps_event_notify_cb(hapd->drv_priv, event, (union wps_event_data *)data);
++}
++#endif //RDK_ONEWIFI
+ 
+ int hostapd_set_authorized(struct hostapd_data *hapd,
+ 			   struct sta_info *sta, int authorized)
+--- a/source/hostap-2.10/src/ap/ap_drv_ops.h	2024-11-26 14:26:40
++++ b/source/hostap-2.10/src/ap/ap_drv_ops.h	2024-11-25 17:53:41
+@@ -26,6 +26,10 @@ int hostapd_set_ap_wps_ie(struct hostapd_data *hapd);
+ 			       struct wpabuf *assocresp);
+ int hostapd_reset_ap_wps_ie(struct hostapd_data *hapd);
+ int hostapd_set_ap_wps_ie(struct hostapd_data *hapd);
++#ifdef RDK_ONEWIFI
++int hostapd_drv_wps_event_notify_cb(struct hostapd_data *hapd, enum wps_event event,
++				    union wps_event_data *data);
++#endif //RDK_ONEWIFI
+ int hostapd_set_authorized(struct hostapd_data *hapd,
+ 			   struct sta_info *sta, int authorized);
+ int hostapd_set_sta_flags(struct hostapd_data *hapd, struct sta_info *sta);
+--- a/source/hostap-2.10/src/ap/hostapd.c	2024-11-26 14:26:40
++++ b/source/hostap-2.10/src/ap/hostapd.c	2024-11-25 17:53:41
+@@ -3654,14 +3654,17 @@ int hostapd_switch_channel(struct hostapd_data *hapd,
+ 	}
+ 
+ 	ret = hostapd_fill_csa_settings(hapd, settings);
+-	if (ret)
++	if (ret) {
++                wpa_printf(MSG_ERROR, "failed to fill csa settings, ret=%d", ret);
+ 		return ret;
++        }
+ 
+ 	ret = hostapd_drv_switch_channel(hapd, settings);
+ 	free_beacon_data(&settings->beacon_csa);
+ 	free_beacon_data(&settings->beacon_after);
+ 
+ 	if (ret) {
++                wpa_printf(MSG_ERROR, "failed to switch channel, ret=%d", ret);
+ 		/* if we failed, clean cs parameters */
+ 		hostapd_cleanup_cs_params(hapd);
+ 		return ret;
+--- a/source/hostap-2.10/src/ap/sta_info.c	2024-11-26 14:26:40
++++ b/source/hostap-2.10/src/ap/sta_info.c	2024-11-25 17:53:41
+@@ -414,6 +414,8 @@ void ap_free_sta(struct hostapd_data *hapd, struct sta
+ 	forced_memzero(sta->last_tk, WPA_TK_MAX_LEN);
+ #endif /* CONFIG_TESTING_OPTIONS */
+ 
++	os_free(sta->assoc_req);
++
+ 	os_free(sta);
+ }
+ 
+--- a/source/hostap-2.10/src/ap/sta_info.h	2024-11-26 14:26:40
++++ b/source/hostap-2.10/src/ap/sta_info.h	2024-11-25 17:53:41
+@@ -333,6 +333,8 @@ struct sta_info {
+ #ifdef CONFIG_PASN
+ 	struct pasn_data *pasn;
+ #endif /* CONFIG_PASN */
++	u8 *assoc_req;
++	size_t assoc_req_len;
+ };
+ 
+ 
+--- a/source/hostap-2.10/src/ap/wps_hostapd.c	2024-11-26 14:26:40
++++ b/source/hostap-2.10/src/ap/wps_hostapd.c	2024-11-25 17:53:41
+@@ -937,6 +937,10 @@ static void hostapd_wps_event_cb(void *ctx, enum wps_e
+ 	}
+ 	if (hapd->wps_event_cb)
+ 		hapd->wps_event_cb(hapd->wps_event_cb_ctx, event, data);
++
++#ifdef RDK_ONEWIFI
++	hostapd_drv_wps_event_notify_cb(hapd, event, data);
++#endif //RDK_ONEWIFI
+ }
+ 
+ 
+--- a/source/hostap-2.10/src/common/ieee802_11_common.c	2024-11-26 14:26:40
++++ b/source/hostap-2.10/src/common/ieee802_11_common.c	2024-11-25 17:53:41
+@@ -1179,7 +1179,7 @@ static const char *const eu_op_class_cc[] = {
+ 	"AL", "AM", "AT", "AZ", "BA", "BE", "BG", "BY", "CH", "CY", "CZ", "DE",
+ 	"DK", "EE", "EL", "ES", "FI", "FR", "GE", "HR", "HU", "IE", "IS", "IT",
+ 	"LI", "LT", "LU", "LV", "MD", "ME", "MK", "MT", "NL", "NO", "PL", "PT",
+-	"RO", "RS", "RU", "SE", "SI", "SK", "TR", "UA", "UK", NULL
++	"RO", "RS", "RU", "SE", "SI", "SK", "TR", "UA", "UK", "GB", NULL
+ };
+ 
+ static const char *const jp_op_class_cc[] = {
+--- a/source/hostap-2.10/src/drivers/driver.h	2024-11-26 14:26:40
++++ b/source/hostap-2.10/src/drivers/driver.h	2024-11-25 17:53:41
+@@ -3496,6 +3496,17 @@ struct wpa_driver_ops {
+ 			     const struct wpabuf *proberesp,
+ 			     const struct wpabuf *assocresp);
+ 
++#ifdef RDK_ONEWIFI
++	/**
++	 * wps_event_notify_cb - Notification of WPS event
++	 * @ctx:   wpa_supplicant context
++	 * @event: wps event type
++	 * @data:  wps event data
++	 * Returns: 0 on success, -1 on failure
++	 */
++	int (*wps_event_notify_cb)(void *ctx, unsigned int event, void *data);
++#endif //RDK_ONEWIFI
++
+ 	/**
+ 	 * set_supp_port - Set IEEE 802.1X Supplicant Port status
+ 	 * @priv: Private driver interface data
+--- a/source/hostap-2.10/src/drivers/nl80211_copy.h	2024-11-26 14:26:40
++++ b/source/hostap-2.10/src/drivers/nl80211_copy.h	2024-11-25 17:53:41
+@@ -3174,6 +3174,7 @@ enum nl80211_attrs {
+ 	NL80211_ATTR_AP_SETTINGS_FLAGS,
+ 
+ 	NL80211_ATTR_EHT_CAPABILITY,
++        NL80211_ATTR_RX_PHY_RATE_INFO = 317,
+ 
+ 	/* add attributes here, update the policy in nl80211.c */
+ 

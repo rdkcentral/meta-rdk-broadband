@@ -1,0 +1,237 @@
+##########################################
+From: Srijeyarankesh_JS@comcast.com
+Date: Nov 24, 2024 6:35 PM
+Source: Comcast
+##########################################
+
+diff --git a/source/hostap-2.10/src/ap/ap_drv_ops.c b/source/hostap-2.10/src/ap/ap_drv_ops.c
+index 9a1ba28..6dbcd38 100644
+--- a/source/hostap-2.10/src/ap/ap_drv_ops.c
++++ b/source/hostap-2.10/src/ap/ap_drv_ops.c
+@@ -779,6 +779,15 @@ int hostapd_drv_radius_eap_failure(struct hostapd_data *hapd,
+        return hapd->driver->radius_eap_failure(hapd->drv_priv, failure_reason);
+ }
+ 
++int hostapd_drv_radius_fallback_failover(void *ctx, int radius_switch_reason)
++{
++	   struct hostapd_data *hapd = (struct hostapd_data*)ctx;
++
++	   if (!hapd->driver || !hapd->driver->radius_fallback_failover || !hapd->drv_priv)
++               return 0;
++       return hapd->driver->radius_fallback_failover(hapd->drv_priv, radius_switch_reason);
++}
++
+ int hostapd_drv_sta_notify_deauth(struct hostapd_data *hapd,
+ 			   const u8 *addr, int reason)
+ {
+diff --git a/source/hostap-2.10/src/ap/ap_drv_ops.h b/source/hostap-2.10/src/ap/ap_drv_ops.h
+index 22ca403..18de10a 100644
+--- a/source/hostap-2.10/src/ap/ap_drv_ops.h
++++ b/source/hostap-2.10/src/ap/ap_drv_ops.h
+@@ -107,6 +107,7 @@ int hostapd_drv_send_mlme(struct hostapd_data *hapd,
+ int hostapd_drv_sta_deauth(struct hostapd_data *hapd,
+ 			   const u8 *addr, int reason);
+ int hostapd_drv_radius_eap_failure(struct hostapd_data *hapd, int failure_reason);
++int hostapd_drv_radius_fallback_failover(void *ctx, int radius_switch_reason);
+ int hostapd_drv_sta_notify_deauth(struct hostapd_data *hapd,
+ 			   const u8 *addr, int reason);
+ int hostapd_drv_sta_disassoc(struct hostapd_data *hapd,
+diff --git a/source/hostap-2.10/src/drivers/driver.h b/source/hostap-2.10/src/drivers/driver.h
+index 54ec265..104a52b 100644
+--- a/source/hostap-2.10/src/drivers/driver.h
++++ b/source/hostap-2.10/src/drivers/driver.h
+@@ -4689,6 +4689,7 @@ struct wpa_driver_ops {
+ 			      bool multicast);
+ #endif /* CONFIG_TESTING_OPTIONS */
+ 	int (*radius_eap_failure)(void *priv, int failure_reason);
++	int (*radius_fallback_failover)(void *priv, int radius_switch_reason);
+ };
+ 
+ /**
+diff --git a/source/hostap-2.10/src/radius/radius_client.c b/source/hostap-2.10/src/radius/radius_client.c
+index ee9e46d..bb730f4 100644
+--- a/source/hostap-2.10/src/radius/radius_client.c
++++ b/source/hostap-2.10/src/radius/radius_client.c
+@@ -19,7 +19,7 @@
+ /**
+  * RADIUS_CLIENT_FIRST_WAIT - RADIUS client timeout for first retry in seconds
+  */
+-#define RADIUS_CLIENT_FIRST_WAIT 3
++#define RADIUS_CLIENT_FIRST_WAIT 2
+ 
+ /**
+  * RADIUS_CLIENT_MAX_WAIT - RADIUS client maximum retry timeout in seconds
+@@ -32,7 +32,7 @@
+  * Maximum number of server failovers before the entry is removed from
+  * retransmit list.
+  */
+-#define RADIUS_CLIENT_MAX_FAILOVER 3
++#define RADIUS_CLIENT_MAX_FAILOVER 2
+ 
+ /**
+  * RADIUS_CLIENT_MAX_ENTRIES - RADIUS client maximum pending messages
+@@ -48,7 +48,11 @@
+  * The number of failed retry attempts after which the RADIUS server will be
+  * changed (if one of more backup servers are configured).
+  */
+-#define RADIUS_CLIENT_NUM_FAILOVER 4
++#define RADIUS_CLIENT_NUM_FAILOVER 2
++
++#define RADIUS_INIT 0
++#define RADIUS_FAILOVER 1
++#define RADIUS_FALLBACK 2
+ 
+ 
+ /**
+@@ -254,6 +258,7 @@ static int radius_client_init_acct(struct radius_client_data *radius);
+ static int radius_client_init_auth(struct radius_client_data *radius);
+ static void radius_client_auth_failover(struct radius_client_data *radius);
+ static void radius_client_acct_failover(struct radius_client_data *radius);
++static void radius_handle_fallback(struct radius_client_data *radius);
+ 
+ 
+ static void radius_client_msg_free(struct radius_msg_list *req)
+@@ -480,7 +485,6 @@ static int radius_client_retransmit(struct radius_client_data *radius,
+ 	}
+ 
+ 	entry->next_try = now + entry->next_wait;
+-	entry->next_wait *= 2;
+ 	if (entry->next_wait > RADIUS_CLIENT_MAX_WAIT)
+ 		entry->next_wait = RADIUS_CLIENT_MAX_WAIT;
+ 
+@@ -601,6 +605,15 @@ static void radius_client_auth_failover(struct radius_client_data *radius)
+ 	radius_change_server(radius, next, old,
+ 			     radius->auth_serv_sock,
+ 			     radius->auth_serv_sock6, 1);
++    if (conf->auth_server == conf->auth_servers)
++	{
++		conf->fallback_already_done = false;
++		hostapd_drv_radius_fallback_failover(radius->ctx, RADIUS_FALLBACK);
++	}
++	else
++	{
++		hostapd_drv_radius_fallback_failover(radius->ctx, RADIUS_FAILOVER);
++	}
+ }
+ 
+ 
+@@ -696,7 +709,7 @@ static void radius_client_list_add(struct radius_client_data *radius,
+ 	entry->next_try = entry->first_try + RADIUS_CLIENT_FIRST_WAIT;
+ 	entry->attempts = 1;
+ 	entry->accu_attempts = 1;
+-	entry->next_wait = RADIUS_CLIENT_FIRST_WAIT * 2;
++	entry->next_wait = RADIUS_CLIENT_FIRST_WAIT;
+ 	if (entry->next_wait > RADIUS_CLIENT_MAX_WAIT)
+ 		entry->next_wait = RADIUS_CLIENT_MAX_WAIT;
+ 	entry->next = radius->msgs;
+@@ -874,12 +887,27 @@ static void radius_client_receive(int sock, void *eloop_ctx, void *sock_ctx)
+ 
+ 	switch (hdr->code) {
+ 	case RADIUS_CODE_ACCESS_ACCEPT:
++	    if((conf->auth_server != conf->auth_servers) && !conf->fallback_already_done)
++		{
++			conf->fallback_already_done = true;
++			radius_handle_fallback(radius);
++		}
+ 		rconf->access_accepts++;
+ 		break;
+ 	case RADIUS_CODE_ACCESS_REJECT:
++	    if((conf->auth_server != conf->auth_servers) && !conf->fallback_already_done)
++		{
++			conf->fallback_already_done = true;
++			radius_handle_fallback(radius);
++		}
+ 		rconf->access_rejects++;
+ 		break;
+ 	case RADIUS_CODE_ACCESS_CHALLENGE:
++	    if((conf->auth_server != conf->auth_servers) && !conf->fallback_already_done)
++		{
++			conf->fallback_already_done = true;
++			radius_handle_fallback(radius);
++		}
+ 		rconf->access_challenges++;
+ 		break;
+ 	case RADIUS_CODE_ACCOUNTING_RESPONSE:
+@@ -1127,7 +1155,7 @@ radius_change_server(struct radius_client_data *radius,
+ 			continue;
+ 		entry->next_try = entry->first_try + RADIUS_CLIENT_FIRST_WAIT;
+ 		entry->attempts = 0;
+-		entry->next_wait = RADIUS_CLIENT_FIRST_WAIT * 2;
++		entry->next_wait = RADIUS_CLIENT_FIRST_WAIT;
+ 	}
+ 
+ 	if (radius->msgs) {
+@@ -1271,6 +1299,7 @@ static void radius_retry_primary_timer(void *eloop_ctx, void *timeout_ctx)
+ 	struct hostapd_radius_servers *conf = radius->conf;
+ 	struct hostapd_radius_server *oserv;
+ 
++
+ 	if (radius->auth_sock >= 0 && conf->auth_servers &&
+ 	    conf->auth_server != conf->auth_servers) {
+ 		oserv = conf->auth_server;
+@@ -1283,6 +1312,11 @@ static void radius_retry_primary_timer(void *eloop_ctx, void *timeout_ctx)
+ 					     radius->auth_serv_sock,
+ 					     radius->auth_serv_sock6, 1);
+ 		}
++		else
++		{
++			conf->fallback_already_done = false;
++			hostapd_drv_radius_fallback_failover(radius->ctx, RADIUS_FALLBACK);
++		}
+ 	}
+ 
+ 	if (radius->acct_sock >= 0 && conf->acct_servers &&
+@@ -1299,12 +1333,12 @@ static void radius_retry_primary_timer(void *eloop_ctx, void *timeout_ctx)
+ 		}
+ 	}
+ 
+-	if (conf->retry_primary_interval)
+-		eloop_register_timeout(conf->retry_primary_interval, 0,
+-				       radius_retry_primary_timer, radius,
+-				       NULL);
+ }
+ 
++static void radius_handle_fallback(struct radius_client_data *radius)
++{
++	eloop_register_timeout(radius->conf->retry_primary_interval,0,radius_retry_primary_timer,radius,NULL);
++}
+ 
+ static int radius_client_disable_pmtu_discovery(int s)
+ {
+@@ -1412,6 +1446,8 @@ static int radius_client_init_auth(struct radius_client_data *radius)
+ 	}
+ #endif /* CONFIG_IPV6 */
+ 
++    hostapd_drv_radius_fallback_failover(radius->ctx,RADIUS_INIT);
++
+ 	return 0;
+ }
+ 
+@@ -1507,11 +1543,6 @@ radius_client_init(void *ctx, struct hostapd_radius_servers *conf)
+ 		return NULL;
+ 	}
+ 
+-	if (conf->retry_primary_interval)
+-		eloop_register_timeout(conf->retry_primary_interval, 0,
+-				       radius_retry_primary_timer, radius,
+-				       NULL);
+-
+ 	return radius;
+ }
+ 
+diff --git a/source/hostap-2.10/src/radius/radius_client.h b/source/hostap-2.10/src/radius/radius_client.h
+index 687cd81..679ca3d 100644
+--- a/source/hostap-2.10/src/radius/radius_client.h
++++ b/source/hostap-2.10/src/radius/radius_client.h
+@@ -160,6 +160,11 @@ struct hostapd_radius_servers {
+ 	 */
+ 	int retry_primary_interval;
+ 
++	/**
++	 * fallback_already_done - A variable to control the fallback timer so that timer is initiated only once
++	 */
++	bool fallback_already_done;
++
+ 	/**
+ 	 * msg_dumps - Whether RADIUS message details are shown in stdout
+ 	 */

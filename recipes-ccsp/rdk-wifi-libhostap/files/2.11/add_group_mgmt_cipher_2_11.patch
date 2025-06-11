@@ -1,0 +1,26 @@
+##########################################
+Date: Nov 11, 2024 1:00 PM
+From: 
+Subject: BIP-CMAC-128 is mandatory in RSN IE according to WiFi7 WPA3-WFA Test plan
+Source: Comcast
+License: BSD
+Upstream-Status: Pending
+Signed-off-by: Bogdan Bogush <bogdan.bogush@comcast.com>
+##########################################
+diff --git a/source/hostap-2.11/src/ap/wpa_auth_ie.c b/source/hostap-2.11/src/ap/wpa_auth_ie.c
+index 112ba8119..6c9121000 100644
+--- a/source/hostap-2.11/src/ap/wpa_auth_ie.c
++++ b/source/hostap-2.11/src/ap/wpa_auth_ie.c
+@@ -352,8 +352,12 @@ int wpa_write_rsn_ie(struct wpa_auth_config *conf, u8 *buf, size_t len,
+ 		pos += PMKID_LEN;
+ 	}
+ 
++#if defined(RDK_ONEWIFI) && defined(CONFIG_IEEE80211BE)
++	if (conf->ieee80211w != NO_MGMT_FRAME_PROTECTION) {
++#else
+ 	if (conf->ieee80211w != NO_MGMT_FRAME_PROTECTION &&
+ 	    conf->group_mgmt_cipher != WPA_CIPHER_AES_128_CMAC) {
++#endif /* RDK_ONEWIFI && CONFIG_IEEE80211BE */
+ 		if (2 + 4 > buf + len - pos)
+ 			return -1;
+ 		if (pmkid == NULL) {
