@@ -4,9 +4,9 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 DEPENDS = "ccsp-common-library webconfig-framework utopia dbus rdk-logger hal-platform hal-cm trower-base64 msgpack-c"
 DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " ", d)}"
 require recipes-ccsp/ccsp/ccsp_common.inc
-SRC_URI = "${RDKB_CCSP_ROOT_GIT}/CcspAdvSecurity/generic;protocol=${RDK_GIT_PROTOCOL};branch=${CCSP_GIT_BRANCH};name=ccsp-adv-security"
-SRCREV_ccsp-adv-security = "${AUTOREV}"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+
+SRC_URI = "${CMF_GITHUB_ROOT}/advanced-security;protocol=https;nobranch=1"
+
 CFLAGS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec',  ' `pkg-config --cflags libsafec`', '-fPIC', d)}"
 LDFLAGS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' `pkg-config --libs libsafec`', '', d)}"
 CFLAGS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', '', ' -DSAFEC_DUMMY_API', d)}"
