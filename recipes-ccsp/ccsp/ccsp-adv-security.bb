@@ -5,7 +5,7 @@ DEPENDS = "ccsp-common-library webconfig-framework utopia dbus rdk-logger hal-pl
 DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " ", d)}"
 require recipes-ccsp/ccsp/ccsp_common.inc
 
-SRC_URI = "${CMF_GITHUB_ROOT}/advanced-security;protocol=https;nobranch=1"
+SRC_URI = "${CMF_GITHUB_ROOT}/advanced-security;protocol=https;branch=main;name=advanced-security"
 
 CFLAGS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec',  ' `pkg-config --cflags libsafec`', '-fPIC', d)}"
 LDFLAGS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' `pkg-config --libs libsafec`', '', d)}"
