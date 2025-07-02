@@ -85,6 +85,7 @@ SRC_URI += " \
         file://${HOSTAPD_PV}/wpa3_compatibility_hostap_2_11.patch \
         file://${HOSTAPD_PV}/add_group_mgmt_cipher_2_11.patch \
 	file://${HOSTAPD_PV}/open_auth_workaround.patch \
+        file://${HOSTAPD_PV}/XB10-1843_CAC.patch \
     ','', d)} \
 "
 
