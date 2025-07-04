@@ -1,4 +1,4 @@
-DEPENDS += " ccsp-common-library webconfig-framework libunpriv dbus mountutils libsyswrapper rdkcertconfig"
+DEPENDS += " ccsp-common-library webconfig-framework libunpriv dbus mountutils libsyswrapper rdkconfig"
 
 LDFLAGS_append = " \
         -lprivilege \
