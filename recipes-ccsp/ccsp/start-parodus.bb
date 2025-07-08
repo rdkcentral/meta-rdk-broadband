@@ -13,9 +13,7 @@ BREAKPAD_BIN_append = " parodusStart"
 
 CFLAGS += " -Wall -Werror -Wextra "
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/generic/startParodus;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=startParodus"
-SRCREV = "${AUTOREV}"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/start-parodus;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
