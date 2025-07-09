@@ -9,14 +9,9 @@ DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " 
 
 require ccsp_common.inc
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspSnmpPa;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=CcspSnmpPa"
+SRC_URI = "${CMF_GITHUB_ROOT}/snmp-protocol-agent;protocol=https;nobranch=1"
 
 CFLAGS += " -Wall -Werror -Wextra "
-
-
-SRCREV_CcspSnmpPa = "${AUTOREV}"
-SRCREV_FORMAT = "CcspSnmpPa"
-PV = "${RDK_RELEASE}+git${SRCPV}"
 
 S = "${WORKDIR}/git"
 
