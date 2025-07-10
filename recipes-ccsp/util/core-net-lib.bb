@@ -2,9 +2,8 @@ DESCRIPTION = "CoreNetLib"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=da3321fa688dcb066faa5080b7d1b009"
 
-SRC_URI = "${RDKB_CCSP_CPC_ROOT_GIT}/CoreNetLib/generic;protocol=${RDK_GIT_PROTOCOL};branch=${CCSP_GIT_BRANCH};name=CoreNetLib"
-SRCREV_CoreNetLib = "${AUTOREV}"
-SRCREV_FORMAT = "CoreNetLib"
+SRC_URI = "${CMF_GITHUB_ROOT}/core-net-library;protocol=https;nobranch=1"
+
 S = "${WORKDIR}/git"
 
 DEPENDS = " libnl ccsp-common-library "
