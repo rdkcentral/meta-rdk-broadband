@@ -10,11 +10,7 @@ DEPENDS_remove_morty = " hal-gwprovappabs"
 
 require ccsp_common.inc
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/GwProvApp-EthWan;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=GwProvApp-EthWan"
-
-SRCREV_GwProvApp-EthWan = "${AUTOREV}"
-SRCREV_FORMAT = "GwProvApp-EthWan"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/gw-provisioning-ethernet-wan;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
