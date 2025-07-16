@@ -9,3 +9,6 @@ PR_pn-ccsp-xdns = "r0"
 
 PV_pn-json-hal-lib = "1.0.0"
 PR_pn-json-hal-lib = "r0"
+
+PV_pn-notify-comp = "1.0.0"
+PR_pn-notify-comp = "r0"
