@@ -16,6 +16,9 @@ PR_pn-ccsp-snmp-pa = "r0"
 PV_pn-ccsp-xdns = "1.0.0"
 PR_pn-ccsp-xdns = "r0"
 
+PV_pn-core-net-lib = "1.0.0"
+PR_pn-core-net-lib = "r0"
+
 PV_pn-json-hal-lib = "1.0.0"
 PR_pn-json-hal-lib = "r0"
 
