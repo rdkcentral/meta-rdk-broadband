@@ -8,11 +8,8 @@ DEPENDS = "ccsp-common-library dbus telemetry"
 DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " ", d)}"
 
 require ccsp_common.inc
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspDmCli;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=CcspDmCli"
 
-SRCREV_CcspDmCli = "${AUTOREV}"
-SRCREV_FORMAT = "CcspDmCli"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/dbus-message-cli;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
