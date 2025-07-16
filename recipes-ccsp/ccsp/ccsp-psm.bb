@@ -11,11 +11,7 @@ DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " 
 
 require ccsp_common.inc
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspPsm;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=CcspPsm"
-
-SRCREV_CcspPsm = "${AUTOREV}"
-SRCREV_FORMAT = "CcspPsm"
-PV = "${RDK_RELEASE}"
+SRC_URI = "${CMF_GITHUB_ROOT}/persistent-storage-manager;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
