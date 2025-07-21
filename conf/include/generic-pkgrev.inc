@@ -10,6 +10,9 @@ PR_pn-ccsp-gwprovapp-ethwan = "r0"
 PV_pn-ccsp-hotspot-kmod = "1.0.0"
 PR_pn-ccsp-hotspot-kmod = "r0"
 
+PV_pn-ccsp-p-and-m = "1.0.0"
+PR_pn-ccsp-p-and-m = "r0"
+
 PV_pn-ccsp-psm = "1.0.0"
 PR_pn-ccsp-psm = "r0"
 
