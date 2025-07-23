@@ -1,4 +1,5 @@
 SRCREV_pn-ccsp-adv-security = "55740fbcd9f7f71a3b57d286f6f9b6f919819b8b"
+SRCREV_pn-ccsp-cr = "e8fa80c5d4e97f95d2fe8a9c83b042f9a3bd3b15"
 SRCREV_pn-ccsp-dmcli = "7b787fbf32e0d8a893f5915ebaa38aca2cf2c9eb"
 SRCREV_pn-ccsp-gwprovapp-ethwan = "5133ed4745360a13261225eb244f04e647ccc2f0"
 SRCREV_pn-ccsp-hotspot-kmod = "72989868d1b15e49fe1f772c9421accaa5c5a44f"

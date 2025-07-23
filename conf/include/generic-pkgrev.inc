@@ -4,6 +4,9 @@ PR_pn-ccsp-adv-security = "r0"
 PV_pn-ccsp-dmcli = "1.0.0"
 PR_pn-ccsp-dmcli = "r0"
 
+PV_pn-ccsp-cr = "1.0.0"
+PR_pn-ccsp-cr = "r0"
+
 PV_pn-ccsp-gwprovapp-ethwan = "1.0.0"
 PR_pn-ccsp-gwprovapp-ethwan = "r0"
 
