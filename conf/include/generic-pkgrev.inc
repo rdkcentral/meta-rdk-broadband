@@ -28,5 +28,8 @@ PR_pn-json-hal-lib = "r0"
 PV_pn-notify-comp = "1.0.0"
 PR_pn-notify-comp = "r0"
 
+PV_pn-powermgr = "1.0.0"
+PR_pn-powermgr = "r0"
+
 PV_pn-start-parodus = "1.0.0"
 PR_pn-start-parodus = "r0"
