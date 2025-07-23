@@ -7,6 +7,9 @@ PR_pn-ccsp-dmcli = "r0"
 PV_pn-ccsp-gwprovapp-ethwan = "1.0.0"
 PR_pn-ccsp-gwprovapp-ethwan = "r0"
 
+PV_pn-ccsp-hotspot = "1.0.0"
+PR_pn-ccsp-hotspot = "r0"
+
 PV_pn-ccsp-hotspot-kmod = "1.0.0"
 PR_pn-ccsp-hotspot-kmod = "r0"
 
