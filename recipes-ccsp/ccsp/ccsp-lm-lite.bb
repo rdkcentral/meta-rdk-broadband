@@ -9,12 +9,7 @@ DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " 
 DEPENDS_append = "${@bb.utils.contains("DISTRO_FEATURES", "WanFailOverSupportEnable", " rbus ", " ", d)}"
 require ccsp_common.inc
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspLMLite;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=CcspLMLite"
-
-SRCREV_CcspLMLite = "${AUTOREV}"
-SRCREV_FORMAT = "CcspLMLite"
-
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/lan-manager-lite;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
