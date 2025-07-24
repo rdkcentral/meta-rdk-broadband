@@ -7,6 +7,9 @@ PR_pn-ccsp-cm-agent = "r0"
 PV_pn-ccsp-dmcli = "1.0.0"
 PR_pn-ccsp-dmcli = "r0"
 
+PV_pn-ccsp-eth-agent = "1.0.0"
+PR_pn-ccsp-eth-agent = "r0"
+
 PV_pn-ccsp-gwprovapp-ethwan = "1.0.0"
 PR_pn-ccsp-gwprovapp-ethwan = "r0"
 
