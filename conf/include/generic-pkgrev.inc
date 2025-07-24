@@ -40,6 +40,9 @@ PR_pn-json-hal-lib = "r0"
 PV_pn-notify-comp = "1.0.0"
 PR_pn-notify-comp = "r0"
 
+PV_pn-rdk-cellularmanager = "1.0.0"
+PR_pn-rdk-cellularmanager = "r0"
+
 PV_pn-start-parodus = "1.0.0"
 PR_pn-start-parodus = "r0"
 
