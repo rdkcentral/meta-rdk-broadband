@@ -10,14 +10,11 @@ DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'WanFailOverSupportEn
 DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'core-net-lib', ' core-net-lib', " ", d)}"
 require ccsp_common.inc
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspEthAgent;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=CcspEthAgent"
+SRC_URI = "${CMF_GITHUB_ROOT}/ethernet-agent;protocol=https;nobranch=1"
+
 CFLAGS += " -Wall -Werror -Wextra -Wno-format-overflow -Wno-format-truncation -Wno-array-bounds"
 
 S = "${WORKDIR}/git"
-
-PV = "${RDK_RELEASE}+git${SRCPV}"
-SRCREV = "${AUTOREV}"
-SRCREV_FORMAT = "${AUTOREV}"
 
 inherit autotools ${@bb.utils.contains("DISTRO_FEATURES", "kirkstone", "python3native", "pythonnative", d)} breakpad-logmapper
 
