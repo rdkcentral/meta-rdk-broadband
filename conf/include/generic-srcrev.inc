@@ -1,4 +1,5 @@
 SRCREV_pn-ccsp-adv-security = "55740fbcd9f7f71a3b57d286f6f9b6f919819b8b"
+SRCREV_pn-ccsp-cm-agent = "c71576ce284a464e3061d18e6eb2688d9707532c"
 SRCREV_pn-ccsp-dmcli = "7b787fbf32e0d8a893f5915ebaa38aca2cf2c9eb"
 SRCREV_pn-ccsp-eth-agent = "df42fab36e5991f3232849e22d84beaa7e70eeef"
 SRCREV_pn-ccsp-gwprovapp-ethwan = "5133ed4745360a13261225eb244f04e647ccc2f0"
