@@ -11,11 +11,8 @@ DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'core-net-lib', ' cor
 require ccsp_common.inc
 CFLAGS += " -Wall -Werror -Wextra -Wno-pointer-sign -Wno-sign-compare "
 CFLAGS_append_kirkstone = " -Wno-array-bounds -Wno-stringop-overflow "
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/hotspot;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=hotspot"
 
-SRCREV_hotspot = "${AUTOREV}"
-SRCREV_FORMAT = "hotspot"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/hotspot;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
