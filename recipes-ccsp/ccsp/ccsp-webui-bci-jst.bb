@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${THISDIR}/../../LICENSE;md5=5bfad6e034e497ee148eec56
 DEPENDS = "ccsp-common-library"
 require ccsp_common.inc
 SRC_URI = "\
-    ${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/webui-bwg;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH} \
+    ${CMF_GITHUB_ROOT}/webui-bwg;protocol=https;nobranch=1 \
     ${CMF_GIT_ROOT}/rdkb/devices/rdkbemu/rdkbemu_xb3;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};destsuffix=xb3;name=xb3 \
     "
 
@@ -18,11 +18,8 @@ SRC_URI_append = " \
                  file://bci_maintenance_window_jst.patch;apply=no \
                  "
 
-SRCREV = "${AUTOREV}"
 SRCREV_xb3 = "${AUTOREV}"
 SRCREV_FORMAT = "default_xb3"
-
-PV = "${RDK_RELEASE}"
 
 S = "${WORKDIR}/git/source/Styles/xb3"
 
