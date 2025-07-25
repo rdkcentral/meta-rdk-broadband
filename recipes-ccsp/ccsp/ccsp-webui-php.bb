@@ -11,15 +11,12 @@ DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " 
 require ccsp_common.inc
 
 SRC_URI = "\
-    ${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/webui;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=webui \
+    ${CMF_GITHUB_ROOT}/webui;protocol=https;nobranch=1 \
     ${CMF_GIT_ROOT}/rdkb/devices/rdkbemu/rdkbemu_xb3;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};destsuffix=xb3;name=xb3 \
     "
 
-SRCREV_webui = "${AUTOREV}"
 SRCREV_xb3 = "${AUTOREV}"
 SRCREV_FORMAT = "webui_xb3"
-
-PV = "${RDK_RELEASE}"
 
 S = "${WORKDIR}/git/source/CcspPhpExtension"
 
