@@ -4,6 +4,9 @@ PR_pn-ccsp-adv-security = "r0"
 PV_pn-ccsp-cm-agent = "1.0.0"
 PR_pn-ccsp-cm-agent = "r0"
 
+PV_pn-ccsp-cr = "1.0.0"
+PR_pn-ccsp-cr = "r0"
+
 PV_pn-ccsp-dmcli = "1.0.0"
 PR_pn-ccsp-dmcli = "r0"
 
