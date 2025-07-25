@@ -28,6 +28,9 @@ PR_pn-ccsp-psm = "r0"
 PV_pn-ccsp-snmp-pa = "1.0.0"
 PR_pn-ccsp-snmp-pa = "r0"
 
+PV_pn-ccsp-xconf = "1.0.0"
+PR_pn-ccsp-xconf = "r0"
+
 PV_pn-ccsp-xdns = "1.0.0"
 PR_pn-ccsp-xdns = "r0"
 
