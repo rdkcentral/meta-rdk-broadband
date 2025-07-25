@@ -11,11 +11,8 @@ DEPENDS += " trower-base64 "
 DEPENDS += "${@bb.utils.contains('DISTRO_FEATURES', 'enable_rdkscheduler',' rdk-scheduler','',d)}"
 DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'core-net-lib', ' core-net-lib', " ", d)}"
 require ccsp_common.inc
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspMisc;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=CcspMisc"
 
-SRCREV_CcspMisc = "${AUTOREV}"
-SRCREV_FORMAT = "CcspMisc"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/miscellaneous-broadband;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
