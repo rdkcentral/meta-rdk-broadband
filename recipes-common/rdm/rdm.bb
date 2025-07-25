@@ -38,6 +38,11 @@ do_install_append () {
         install -d ${D}${sysconfdir}
         install -d ${D}${sysconfdir}/rdm/
         install -m644 ${S}/src/rdm_rsa_signature_verify.h ${D}${includedir}/rdm/
+        install -m644 ${S}/src/rdm_types.h  ${D}${includedir}/rdm/
+        install -m644 ${S}/src/rdm.h  ${D}${includedir}/rdm/
+        install -m644 ${S}/src/rdm_utils.h  ${D}${includedir}/rdm/
+        install -m644 ${S}/src/rdm_jsonquery.h  ${D}${includedir}/rdm/
+        install -m644 ${S}/src/rdm_download.h  ${D}${includedir}/rdm/
         install -m 0755 ${S}/scripts/* ${D}${sysconfdir}/rdm/
         install -m 0600 ${S}/rdm-manifest.json ${D}${sysconfdir}/rdm/
 
