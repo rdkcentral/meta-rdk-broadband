@@ -6,11 +6,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=175792518e4ac015ab6696d16c4f607e"
 
 DEPENDS = "libxml2 ccsp-common-library utopia curl mountutils"
 require ccsp_common.inc
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspHomeSecurity;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=CcspHomeSecurity"
 
-SRCREV_CcspHomeSecurity = "${AUTOREV}"
-SRCREV_FORMAT = "CcspHomeSecurity"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/home-security;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 

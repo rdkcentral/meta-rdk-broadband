@@ -16,6 +16,9 @@ PR_pn-ccsp-eth-agent = "r0"
 PV_pn-ccsp-gwprovapp-ethwan = "1.0.0"
 PR_pn-ccsp-gwprovapp-ethwan = "r0"
 
+PV_pn-ccsp-home-security = "1.0.0"
+PR_pn-ccsp-home-security = "r0"
+
 PV_pn-ccsp-hotspot = "1.0.0"
 PR_pn-ccsp-hotspot = "r0"
 
