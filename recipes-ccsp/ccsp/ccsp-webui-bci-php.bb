@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://../../LICENSE;md5=0ef5cb68a38cd4d4c9f9d350c50f68f8"
 DEPENDS = "ccsp-common-library php ccsp-webui-csrf"
 require ccsp_common.inc
 SRC_URI = "\
-    ${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/webui-bwg;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH} \
+    ${CMF_GITHUB_ROOT}/webui-bwg;protocol=https;nobranch=1 \
     ${CMF_GIT_ROOT}/rdkb/devices/rdkbemu/rdkbemu_xb3;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};destsuffix=xb3;name=xb3 \
     "
 
@@ -20,11 +20,8 @@ SRC_URI_append = " \
                  file://bci_maintenance_window.patch;apply=no \
                  "
 
-SRCREV = "${AUTOREV}"
 SRCREV_xb3 = "${AUTOREV}"
 SRCREV_FORMAT = "default_xb3"
-
-PV = "${RDK_RELEASE}"
 
 S = "${WORKDIR}/git/source/CcspPhpExtension"
 
