@@ -7,12 +7,7 @@ DEPENDS = "ccsp-common-library rdk-logger utopia libunpriv halinterface glib-2.0
 DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'cellular_libqmi_support', 'libqmi', '', d)}"
 DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " ", d)}"
 
-SRC_URI ="${RDKB_CCSP_ROOT_GIT}/RdkCellularManager/generic;protocol=${RDK_GIT_PROTOCOL};branch=${CCSP_GIT_BRANCH};name=CellularManager"
-
-SRCREV_CellularManager = "${AUTOREV}"
-SRCREV_FORMAT = "CellularManager"
-
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/cellular-manager;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 

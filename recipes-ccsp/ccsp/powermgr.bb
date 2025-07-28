@@ -6,11 +6,7 @@ DEPENDS = "ccsp-common-library utopia hal-cm hal-dhcpv4c hal-ethsw hal-moca hal-
 
 require recipes-ccsp/ccsp/ccsp_common.inc
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/PowerManager;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=powermgr"
-
-SRCREV_powermgr = "${AUTOREV}"
-SRCREV_FORMAT = "powermgr"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/power-manager;protocol=https;nobranch=1"
 
 CFLAGS_append = " \
     -I${STAGING_INCDIR}/dbus-1.0 \
