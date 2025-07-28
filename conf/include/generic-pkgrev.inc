@@ -40,6 +40,9 @@ PR_pn-ccsp-webui-jst = "r0"
 PV_pn-ccsp-webui-php = "1.0.0"
 PR_pn-ccsp-webui-php = "r0"
 
+PV_pn-ccsp-xconf = "1.0.0"
+PR_pn-ccsp-xconf = "r0"
+
 PV_pn-ccsp-xdns = "1.0.0"
 PR_pn-ccsp-xdns = "r0"
 
