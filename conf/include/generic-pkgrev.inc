@@ -78,3 +78,6 @@ PR_pn-start-parodus = "r0"
 
 PV_pn-test-and-diagnostic = "1.0.0"
 PR_pn-test-and-diagnostic = "r0"
+
+PV_pn-utopia = "1.0.0"
+PR_pn-utopia = "r0"
