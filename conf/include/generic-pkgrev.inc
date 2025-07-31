@@ -4,6 +4,12 @@ PR_pn-ccsp-adv-security = "r0"
 PV_pn-ccsp-cm-agent = "1.0.0"
 PR_pn-ccsp-cm-agent = "r0"
 
+PV_pn-ccsp-common-library = "1.0.0"
+PR_pn-ccsp-common-library = "r0"
+
+PV_pn-ccsp-common-library-native = "1.0.0"
+PR_pn-ccsp-common-library-native = "r0"
+
 PV_pn-ccsp-cr = "1.0.0"
 PR_pn-ccsp-cr = "r0"
 

@@ -13,14 +13,10 @@ RDEPENDS_${PN}_remove_morty = "bash"
 
 require ccsp_common.inc
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspCommonLibrary;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH}"
+SRC_URI = "${CMF_GITHUB_ROOT}/common-library;protocol=https;nobranch=1"
 
 SRC_URI_append = " file://0001-DBusLoop-SSL_state-TLS_ST_OK.patch"
 SRC_URI_remove_morty = " file://0001-DBusLoop-SSL_state-TLS_ST_OK.patch"
-
-SRCREV = "${AUTOREV}"
-SRCREV_FORMAT = "${AUTOREV}"
-PV = "${RDK_RELEASE}+git${SRCPV}"
 
 S = "${WORKDIR}/git"
 
