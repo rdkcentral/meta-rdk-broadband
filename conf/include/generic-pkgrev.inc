@@ -73,6 +73,9 @@ PR_pn-json-hal-lib = "r0"
 PV_pn-lanmanager = "1.0.0"
 PR_pn-lanmanager = "r0"
 
+PV_pn-mesh-agent = "1.0.0"
+PR_pn-mesh-agent = "r0"
+
 PV_pn-notify-comp = "1.0.0"
 PR_pn-notify-comp = "r0"
 
