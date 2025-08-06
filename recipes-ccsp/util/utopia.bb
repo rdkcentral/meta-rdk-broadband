@@ -17,13 +17,8 @@ RDEPENDS_${PN}_append = " bash"
 RDEPENDS_${PN}_remove_morty = " bash"
 
 require recipes-ccsp/ccsp/ccsp_common.inc
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/Utopia;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=Utopia"
 
-SRCREV_Utopia = "${AUTOREV}"
-
-SRCREV_FORMAT = "Utopia"
-
-PV = "${RDK_RELEASE}"
+SRC_URI = "${CMF_GITHUB_ROOT}/utopia;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 

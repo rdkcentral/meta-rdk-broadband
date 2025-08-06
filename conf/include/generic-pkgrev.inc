@@ -4,6 +4,12 @@ PR_pn-ccsp-adv-security = "r0"
 PV_pn-ccsp-cm-agent = "1.0.0"
 PR_pn-ccsp-cm-agent = "r0"
 
+PV_pn-ccsp-common-library = "1.0.0"
+PR_pn-ccsp-common-library = "r0"
+
+PV_pn-ccsp-common-library-native = "1.0.0"
+PR_pn-ccsp-common-library-native = "r0"
+
 PV_pn-ccsp-cr = "1.0.0"
 PR_pn-ccsp-cr = "r0"
 
@@ -36,6 +42,9 @@ PR_pn-ccsp-psm = "r0"
 
 PV_pn-ccsp-snmp-pa = "1.0.0"
 PR_pn-ccsp-snmp-pa = "r0"
+
+PV_pn-ccsp-tr069-pa = "1.0.0"
+PR_pn-ccsp-tr069-pa = "r0"
 
 PV_pn-ccsp-webui-bci-jst = "1.0.0"
 PR_pn-ccsp-webui-bci-jst = "r0"
@@ -81,3 +90,6 @@ PR_pn-start-parodus = "r0"
 
 PV_pn-test-and-diagnostic = "1.0.0"
 PR_pn-test-and-diagnostic = "r0"
+
+PV_pn-utopia = "1.0.0"
+PR_pn-utopia = "r0"
