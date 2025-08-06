@@ -8,11 +8,8 @@ DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " 
 
 require recipes-ccsp/ccsp/ccsp_common.inc
 
-SRC_URI ="${RDKB_CCSP_ROOT_GIT}/LanManager/generic;protocol=${RDK_GIT_PROTOCOL};branch=${CCSP_GIT_BRANCH};name=LanManager"
+SRC_URI = "${CMF_GITHUB_ROOT}/lan-manager;protocol=https;nobranch=1"
 
-SRCREV_LanManager = "${AUTOREV}"
-SRCREV_FORMAT = "LanManager"
-PV = "${RDK_RELEASE}+git${SRCPV}"
 S = "${WORKDIR}/git"
 
 inherit autotools systemd

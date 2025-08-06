@@ -10,11 +10,8 @@ DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'core-net-lib', ' cor
 DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'enable_rdkscheduler', ' trower-base64 msgpack-c rdk-scheduler cimplog', " ", d)}"
 
 require recipes-ccsp/ccsp/ccsp_common.inc
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/TestAndDiagnostic;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=TestAndDiagnostic"
 
-SRCREV_TestAndDiagnostic = "${AUTOREV}"
-SRCREV_FORMAT = "TestAndDiagnostic"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/test-and-diagnostic;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
