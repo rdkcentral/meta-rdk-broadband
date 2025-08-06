@@ -31,6 +31,9 @@ PR_pn-ccsp-lm-lite = "r0"
 PV_pn-ccsp-misc = "1.0.0"
 PR_pn-ccsp-misc = "r0"
 
+PV_pn-ccsp-p-and-m = "1.0.0"
+PR_pn-ccsp-p-and-m = "r0"
+
 PV_pn-ccsp-psm = "1.0.0"
 PR_pn-ccsp-psm = "r0"
 
