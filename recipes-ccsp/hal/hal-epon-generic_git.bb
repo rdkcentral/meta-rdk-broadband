@@ -8,12 +8,9 @@ PROVIDES = "hal-epon"
 RPROVIDES_${PN} = "hal-epon"
 
 DEPENDS += "halinterface"
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/hal;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=eponhal"
 
-SRCREV_eponhal = "${AUTOREV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/hardware-abstraction-layer;protocol=https;nobranch=1;name=eponhal"
 SRCREV_FORMAT = "eponhal"
-
-PV = "${RDK_RELEASE}+git${SRCPV}"
 
 S = "${WORKDIR}/git/source/epon"
 

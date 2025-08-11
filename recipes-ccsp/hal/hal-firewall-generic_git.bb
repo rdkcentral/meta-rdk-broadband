@@ -8,12 +8,9 @@ PROVIDES = "hal-firewall"
 RPROVIDES_${PN} = "hal-firewall"
 
 DEPENDS += "halinterface"
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/hal;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=firewallhal"
 
-SRCREV_firewallhal = "${AUTOREV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/hardware-abstraction-layer;protocol=https;nobranch=1;name=firewallhal"
 SRCREV_FORMAT = "firewallhal"
-
-PV = "${RDK_RELEASE}+git${SRCPV}"
 
 S = "${WORKDIR}/git/source/firewall"
 
