@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=e76996dff7c96f34b60249db92fc7aeb"
 
 DEPENDS = "ccsp-common-library ${@bb.utils.contains('DISTRO_FEATURES', 'rbus', '', 'dbus', d)} curl"
 
-SRC_URI = "${CMF_GITHUB_ROOT}/jst;protocol=https;nobranch=1"
+SRC_URI = "${CMF_GITHUB_ROOT}/javascript-templates;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
