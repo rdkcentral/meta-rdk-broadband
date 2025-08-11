@@ -11,13 +11,7 @@ require ccsp_common.inc
 
 CFLAGS += " -Wall -Werror -Wextra -Wno-address -Wno-enum-conversion"
 
-
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspMoCA;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=CcspMoCA"
-
-SRCREV_CcspMoCA = "${AUTOREV}"
-SRCREV_FORMAT = "CcspMoCA"
-
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/moca-agent;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
