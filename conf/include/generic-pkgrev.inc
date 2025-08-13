@@ -82,6 +82,9 @@ PR_pn-harvester = "r0"
 PV_pn-json-hal-lib = "2.0.0"
 PR_pn-json-hal-lib = "r0"
 
+PV_pn-jst = "1.0.0"
+PR_pn-jst = "r0"
+
 PV_pn-lanmanager = "1.0.0"
 PR_pn-lanmanager = "r0"
 
