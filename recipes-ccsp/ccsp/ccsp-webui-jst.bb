@@ -9,15 +9,12 @@ DEPENDS = "ccsp-common-library chrpath-replacement-native"
 require ccsp_common.inc
 
 SRC_URI = "\
-    git://${RDK_GIT}/rdk/rdkb/components/opensource/ccsp/webui/generic;protocol=${RDK_GIT_PROTOCOL};branch=${CCSP_GIT_BRANCH};name=webui \
+    ${CMF_GITHUB_ROOT}/webui;protocol=https;nobranch=1 \
     git://${RDK_GIT}/rdk/rdkb/devices/rdkbemu/rdkbemu_xb3;protocol=${RDK_GIT_PROTOCOL};branch=${CCSP_GIT_BRANCH};destsuffix=xb3;name=xb3 \
     "
 
-SRCREV_webui = "${AUTOREV}"
 SRCREV_xb3 = "${AUTOREV}"
 SRCREV_FORMAT = "webui_xb3"
-
-PV = "${RDK_RELEASE}"
 
 S = "${WORKDIR}/git/source/Styles/xb3"
 

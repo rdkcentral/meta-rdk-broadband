@@ -11,11 +11,7 @@ require ccsp_common.inc
 
 CFLAGS += " -Wall -Werror -Wextra -Wno-free-nonheap-object -Wno-array-bounds -Wno-stringop-overread"
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspMtaAgent;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=CcspMtaAgent"
-
-SRCREV_CcspMtaAgent = "${AUTOREV}"
-SRCREV_FORMAT = "CcspMtaAgent"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/media-terminal-adapter-agent;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 

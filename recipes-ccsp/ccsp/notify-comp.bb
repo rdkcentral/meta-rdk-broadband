@@ -4,15 +4,12 @@ SECTION = "console/utils"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=8da35c40378155af4c5404b8f72d1237"
 
-PV = "${RDK_RELEASE}+git${SRCPV}"
 DEPENDS = "ccsp-common-library dbus rdk-logger utopia breakpad breakpad-wrapper"
 DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " ", d)}"
 
 require recipes-ccsp/ccsp/ccsp_common.inc
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/generic/notify_comp;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=notify-comp"
-SRCREV_notify-comp = "${AUTOREV}"
-SRCREV_FORMAT = "notify-comp"
+SRC_URI = "${CMF_GITHUB_ROOT}/notify-component;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git/notify_comp"
 inherit autotools pkgconfig breakpad-wrapper coverity ${@bb.utils.contains("DISTRO_FEATURES", "kirkstone", "python3native", "pythonnative", d)} breakpad-logmapper

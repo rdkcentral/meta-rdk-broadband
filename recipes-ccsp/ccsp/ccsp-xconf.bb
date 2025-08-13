@@ -4,8 +4,6 @@ SECTION = "console/utils"
 LICENSE = "Apache-2.0" 
 LIC_FILES_CHKSUM = "file://LICENSE;md5=175792518e4ac015ab6696d16c4f607e"
 
-PV = "${RDK_RELEASE}+git${SRCPV}"
-
 DEPENDS = "ccsp-common-library hal-cm hal-dhcpv4c hal-ethsw hal-moca hal-mso_mgmt hal-mta hal-platform hal-vlan hal-wifi telemetry"
 DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'fwupgrade_manager', ' hal-fwupgrade', '',d)}"
 DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " ", d)}"
@@ -15,10 +13,7 @@ RDEPENDS_${PN}_remove_morty = "bash"
 
 require recipes-ccsp/ccsp/ccsp_common.inc
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/Xconf;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=Xconf"
-
-SRCREV_Xconf = "${AUTOREV}"
-SRCREV_FORMAT = "Xconf"
+SRC_URI = "${CMF_GITHUB_ROOT}/xconf-client;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 

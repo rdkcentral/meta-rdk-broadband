@@ -11,11 +11,7 @@ require ccsp_common.inc
 
 CFLAGS += " -Wall -Werror -Wextra -Wno-enum-conversion"
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspCr;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=CcspCr"
-
-SRCREV_CcspCr = "${AUTOREV}"
-SRCREV_FORMAT = "CCspCr"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/component-registry;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
