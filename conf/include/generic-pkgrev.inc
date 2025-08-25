@@ -76,6 +76,42 @@ PR_pn-ccsp-xdns = "r0"
 PV_pn-core-net-lib = "1.0.0"
 PR_pn-core-net-lib = "r0"
 
+PV_pn-hal-bridgeutil = "1.0.0"
+PR_pn-hal-bridgeutil = "r0"
+
+PV_pn-hal-cm-generic = "1.0.0"
+PR_pn-hal-cm-generic = "r0"
+
+PV_pn-hal-dhcpv4c-generic = "1.0.0"
+PR_pn-hal-dhcpv4c-generic = "r0"
+
+PV_pn-hal-epon-generic = "1.0.0"
+PR_pn-hal-epon-generic = "r0"
+
+PV_pn-hal-ethsw-generic = "1.0.0"
+PR_pn-hal-ethsw-generic = "r0"
+
+PV_pn-hal-firewall-generic = "1.0.0"
+PR_pn-hal-firewall-generic = "r0"
+
+PV_pn-hal-moca-generic = "1.0.0"
+PR_pn-hal-moca-generic = "r0"
+
+PV_pn-hal-mso-mgmt-generic = "1.0.0"
+PR_pn-hal-mso-mgmt-generic = "r0"
+
+PV_pn-hal-mta-generic = "1.0.0"
+PR_pn-hal-mta-generic = "r0"
+
+PV_pn-hal-platform-generic = "1.0.0"
+PR_pn-hal-platform-generic = "r0"
+
+PV_pn-hal-vlan-generic = "1.0.0"
+PR_pn-hal-vlan-generic = "r0"
+
+PV_pn-hal-wifi-generic = "1.0.0"
+PR_pn-hal-wifi-generic = "r0"
+
 PV_pn-harvester = "1.0.0"
 PR_pn-harvester = "r0"
 
