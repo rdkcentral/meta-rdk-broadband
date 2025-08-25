@@ -10,11 +10,7 @@ DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " 
 
 require ccsp_common.inc
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/GwProvApp;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=GwProvApp"
-
-SRCREV_GwProvApp = "${AUTOREV}"
-SRCREV_FORMAT = "GwProvApp"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/gw-provisioning-application;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
