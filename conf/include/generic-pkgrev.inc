@@ -76,6 +76,9 @@ PR_pn-ccsp-xdns = "r0"
 PV_pn-core-net-lib = "1.0.0"
 PR_pn-core-net-lib = "r0"
 
+PV_pn-halinterface = "1.0.0"
+PR_pn-halinterface = "r0"
+
 PV_pn-hal-bridgeutil = "1.0.0"
 PR_pn-hal-bridgeutil = "r0"
 
