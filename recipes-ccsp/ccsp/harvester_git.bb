@@ -9,10 +9,7 @@ RDEPENDS_${PN} += "${@bb.utils.contains("DISTRO_FEATURES", "OneWifi", " cjson ",
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/generic/harvester;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=harvester"
-
-SRCREV_harvester = "${AUTOREV}"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/harvester;protocol=https;nobranch=1"
 
 CFLAGS += " -Wall -Werror -Wextra -Wno-unused-parameter -Wno-pointer-sign -Wno-sign-compare "
 

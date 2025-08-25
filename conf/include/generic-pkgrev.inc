@@ -19,6 +19,9 @@ PR_pn-ccsp-dmcli = "r0"
 PV_pn-ccsp-eth-agent = "1.0.0"
 PR_pn-ccsp-eth-agent = "r0"
 
+PV_pn-ccsp-gwprovapp = "1.0.0"
+PR_pn-ccsp-gwprovapp = "r0"
+
 PV_pn-ccsp-gwprovapp-ethwan = "1.0.0"
 PR_pn-ccsp-gwprovapp-ethwan = "r0"
 
@@ -36,6 +39,9 @@ PR_pn-ccsp-lm-lite = "r0"
 
 PV_pn-ccsp-misc = "1.0.0"
 PR_pn-ccsp-misc = "r0"
+
+PV_pn-ccsp-moca = "1.0.0"
+PR_pn-ccsp-moca = "r0"
 
 PV_pn-ccsp-mta-agent = "1.0.0"
 PR_pn-ccsp-mta-agent = "r0"
@@ -106,8 +112,14 @@ PR_pn-hal-vlan-generic = "r0"
 PV_pn-hal-wifi-generic = "1.0.0"
 PR_pn-hal-wifi-generic = "r0"
 
+PV_pn-harvester = "1.0.0"
+PR_pn-harvester = "r0"
+
 PV_pn-json-hal-lib = "2.0.0"
 PR_pn-json-hal-lib = "r0"
+
+PV_pn-jst = "1.0.0"
+PR_pn-jst = "r0"
 
 PV_pn-lanmanager = "1.0.0"
 PR_pn-lanmanager = "r0"
@@ -118,8 +130,14 @@ PR_pn-mesh-agent = "r0"
 PV_pn-notify-comp = "1.0.0"
 PR_pn-notify-comp = "r0"
 
+PV_pn-ovs-agent = "1.0.0"
+PR_pn-ovs-agent = "r0"
+
 PV_pn-powermgr = "1.0.0"
 PR_pn-powermgr = "r0"
+
+PV_pn-rdk-fwupgrade-manager = "1.0.0"
+PR_pn-rdk-fwupgrade-manager = "r0"
 
 PV_pn-rdk-cellularmanager = "1.0.0"
 PR_pn-rdk-cellularmanager = "r0"
