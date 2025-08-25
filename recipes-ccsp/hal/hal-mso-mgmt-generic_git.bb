@@ -8,12 +8,9 @@ PROVIDES = "hal-mso_mgmt"
 RPROVIDES_${PN} = "hal-mso_mgmt"
 
 DEPENDS += "rdkb-halif-mso"
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/hal;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=msomgmthal"
 
-SRCREV_msomgmthal = "${AUTOREV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/hardware-abstraction-layer;protocol=https;nobranch=1;name=msomgmthal"
 SRCREV_FORMAT = "msomgmthal"
-
-PV = "${RDK_RELEASE}+git${SRCPV}"
 
 S = "${WORKDIR}/git/source/mso_mgmt"
 

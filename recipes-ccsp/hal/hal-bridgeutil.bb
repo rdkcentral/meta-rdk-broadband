@@ -8,12 +8,9 @@ PROVIDES = "hal-bridgeutil"
 RPROVIDES_${PN} = "hal-bridgeutil"
 
 DEPENDS += "rdkb-halif-bridge-util"
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/hal;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=bridgeutil"
 
-SRCREV_bridgeutil = "${AUTOREV}"
-SRCREV_FORMAT = "bridgeutil"
-
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/hardware-abstraction-layer;protocol=https;nobranch=1;name=bridgeutilhal"
+SRCREV_FORMAT = "bridgeutilhal"
 
 S = "${WORKDIR}/git/source/bridgeutil"
 
