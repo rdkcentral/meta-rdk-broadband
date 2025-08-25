@@ -94,6 +94,9 @@ PR_pn-mesh-agent = "r0"
 PV_pn-notify-comp = "1.0.0"
 PR_pn-notify-comp = "r0"
 
+PV_pn-ovs-agent = "1.0.0"
+PR_pn-ovs-agent = "r0"
+
 PV_pn-powermgr = "1.0.0"
 PR_pn-powermgr = "r0"
 
