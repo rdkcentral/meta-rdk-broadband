@@ -4,12 +4,10 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=e76996dff7c96f34b60249db92fc7aeb"
 
 DEPENDS = "ccsp-common-library ${@bb.utils.contains('DISTRO_FEATURES', 'rbus', '', 'dbus', d)} curl"
 
-SRC_URI = "${RDK_GENERIC_ROOT_GIT}/jst/generic;protocol=${RDK_GIT_PROTOCOL};branch=${RDK_GIT_BRANCH}"
+SRC_URI = "${CMF_GITHUB_ROOT}/javascript-templates;protocol=https;nobranch=1"
 
-PV = "${RDK_RELEASE}+git${SRCPV}"
-SRCREV ?= "${AUTOREV}"
 S = "${WORKDIR}/git"
-  
+
 inherit cmake
 
 EXTRA_OECMAKE += "-DBUILD_RDK=ON "

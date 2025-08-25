@@ -6,12 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=175792518e4ac015ab6696d16c4f607e"
 DEPENDS = "ccsp-common-library hal-cm dbus rdk-logger utopia halinterface hal-fwupgrade libunpriv"
 require ccsp_common.inc
 
-SRC_URI ="${RDKB_CCSP_ROOT_GIT}/RdkPlatformManager/generic;protocol=${RDK_GIT_PROTOCOL};branch=${CCSP_GIT_BRANCH};name=FwUpgradeManager"
-
-SRCREV_FwUpgradeManager = "${AUTOREV}"
-SRCREV_FORMAT = "FwUpgradeManager"
-
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/platform-manager;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
