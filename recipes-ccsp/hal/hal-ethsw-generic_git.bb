@@ -8,12 +8,9 @@ PROVIDES = "hal-ethsw"
 RPROVIDES_${PN} = "hal-ethsw"
 
 DEPENDS += "rdkb-halif-ethsw"
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/hal;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=ethswhal"
 
-SRCREV_ethswhal = "${AUTOREV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/hardware-abstraction-layer;protocol=https;nobranch=1;name=ethswhal"
 SRCREV_FORMAT = "ethswhal"
-
-PV = "${RDK_RELEASE}+git${SRCPV}"
 
 S = "${WORKDIR}/git/source/ethsw"
 

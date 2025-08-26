@@ -9,12 +9,7 @@ DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'safec', ' safec', " 
 
 require ccsp_common.inc
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspTr069Pa;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=CcspTr069Pa"
-
-
-SRCREV_CcspTr069Pa = "${AUTOREV}"
-SRCREV_FORMAT = "CcspTr069Pa"
-PV = "${RDK_RELEASE}"
+SRC_URI = "${CMF_GITHUB_ROOT}/tr069-protocol-agent;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
