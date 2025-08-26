@@ -46,6 +46,9 @@ PR_pn-ccsp-moca = "r0"
 PV_pn-ccsp-mta-agent = "1.0.0"
 PR_pn-ccsp-mta-agent = "r0"
 
+PV_pn-ccsp-p-and-m = "1.0.0"
+PR_pn-ccsp-p-and-m = "r0"
+
 PV_pn-ccsp-psm = "1.0.0"
 PR_pn-ccsp-psm = "r0"
 

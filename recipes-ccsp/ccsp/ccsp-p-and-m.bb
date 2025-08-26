@@ -31,16 +31,7 @@ CFLAGS += " -Wall -Werror -Wextra -Wno-shift-negative-value"
 
 CFLAGS_append = " -Wno-deprecated-declarations -Wno-stringop-overflow -Wno-format-truncation -Wno-enum-conversion -Wno-array-bounds -Wno-misleading-indentation"
 
-SRC_URI = "${CMF_GIT_ROOT}/rdkb/components/opensource/ccsp/CcspPandM;protocol=${CMF_GIT_PROTOCOL};branch=${CMF_GIT_BRANCH};name=CcspPandM"
-
-#SRC_URI_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'rdkb_wan_manager', 'file://0001-disable-fwupgrade-dm.patch', '', d)}"
-
-#SRC_URI_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'rdkb_wan_manager', 'file://0002-disable-dhcp-clients-tr181-dml-in-PandM.patch', '', d)}"
-#SRC_URI_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'rdkb_wan_manager', 'file://0003-disable-ppp-tr181-dml-in-PandM.patch', '', d)}"
-
-SRCREV_CcspPandM = "${AUTOREV}"
-SRCREV_FORMAT = "CcspPandM"
-PV = "${RDK_RELEASE}+git${SRCPV}"
+SRC_URI = "${CMF_GITHUB_ROOT}/provisioning-and-management;protocol=https;nobranch=1"
 
 S = "${WORKDIR}/git"
 
