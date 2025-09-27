@@ -1,0 +1,12 @@
+diff --color -Naur git.orig/source/hostap-2.10/src/ap/wpa_auth.c git/source/hostap-2.10/src/ap/wpa_auth.c
+--- git.orig/source/hostap-2.10/src/ap/wpa_auth.c	2025-01-23 16:13:28.964066079 +0200
++++ git/source/hostap-2.10/src/ap/wpa_auth.c	2025-01-23 16:14:21.111960546 +0200
+@@ -68,7 +68,7 @@
+ static int ieee80211w_kde_len(struct wpa_state_machine *sm);
+ static u8 * ieee80211w_kde_add(struct wpa_state_machine *sm, u8 *pos);
+ 
+-static const u32 eapol_key_timeout_first = 100; /* ms */
++static const u32 eapol_key_timeout_first = 1000; /* ms */
+ static const u32 eapol_key_timeout_subseq = 1000; /* ms */
+ static const u32 eapol_key_timeout_first_group = 500; /* ms */
+ static const u32 eapol_key_timeout_no_retrans = 4000; /* ms */

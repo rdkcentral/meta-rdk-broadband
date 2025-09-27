@@ -1,0 +1,80 @@
+##########################################
+Date: Apr 16, 2024 1:00 PM
+From:
+Subject: Get AID from driver
+Source: Comcast
+License: BSD
+Upstream-Status: Pending
+Signed-off-by: Bogdan Bogush <bogdan.bogush@comcast.com>
+##########################################
+diff --git a/source/hostap-2.9/src/ap/ieee802_11.c b/source/hostap-2.9/src/ap/ieee802_11.c
+index c85a28d..70c10b8 100755
+--- a/source/hostap-2.9/src/ap/ieee802_11.c
++++ b/source/hostap-2.9/src/ap/ieee802_11.c
+@@ -2449,6 +2449,12 @@ int hostapd_get_aid(struct hostapd_data *hapd, struct sta_info *sta)
+ 		return 0;
+ 	}
+ 
++#ifdef CONFIG_DRIVER_AID
++	if (hapd->driver->get_aid) {
++		return (*hapd->driver->get_aid)(hapd->drv_priv, &sta->aid, sta->addr);
++	}
++#endif
++
+ 	if (TEST_FAIL())
+ 		return -1;
+ 
+diff --git a/source/hostap-2.9/src/ap/sta_info.c b/source/hostap-2.9/src/ap/sta_info.c
+index 63d9736..658347e 100755
+--- a/source/hostap-2.9/src/ap/sta_info.c
++++ b/source/hostap-2.9/src/ap/sta_info.c
+@@ -184,8 +184,14 @@ void ap_free_sta(struct hostapd_data *hapd, struct sta_info *sta)
+ 	ap_sta_list_del(hapd, sta);
+ 
+ 	if (sta->aid > 0)
++#if CONFIG_DRIVER_AID
++		if (hapd->driver->free_aid) {
++			(*hapd->driver->free_aid)(hapd->drv_priv, &sta->aid);
++		}
++#else
+ 		hapd->sta_aid[(sta->aid - 1) / 32] &=
+ 			~BIT((sta->aid - 1) % 32);
++#endif
+ 
+ 	hapd->num_sta--;
+ 	if (sta->nonerp_set) {
+diff --git a/source/hostap-2.9/src/drivers/driver.h b/source/hostap-2.9/src/drivers/driver.h
+index 66d52fd..98d7411 100755
+--- a/source/hostap-2.9/src/drivers/driver.h
++++ b/source/hostap-2.9/src/drivers/driver.h
+@@ -3792,6 +3792,30 @@ struct wpa_driver_ops {
+ 	 */
+ 	int (*status)(void *priv, char *buf, size_t buflen);
+ 
++	/**
++	 * get_aid - Receive a new association ID for a station
++	 * @priv: Private driver interface data
++	 * @aid: Memory address for storing the received AID
++	 * @addr: MAC address of the station
++	 * Returns: 0 on success, -1 on failure
++	 *
++	 * This function is used to receive a new AID from the kernel driver,
++	 * which may in turn ask it from the FW, and that from the HW.
++	 * This AID is tied to SID and will need to be freed eventually.
++	*/
++	int (*get_aid)(void *priv, u16 *aid, const u8 *addr);
++
++	/**
++	 * free_aid - Release an association ID
++	 * @priv: Private driver interface data
++	 * @aid: AID to release
++	 * Returns: 0 on success, -1 on failure
++	 *
++	 * This function is used to release an AID back to the kernel driver,
++	 * which may release it to the FW, and that to the HW.
++	 */
++	int (*free_aid)(void *priv, u16 *aid);
++
+ 	/**
+ 	 * roaming - Set roaming policy for driver-based BSS selection
+ 	 * @priv: Private driver interface data

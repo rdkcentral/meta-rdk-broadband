@@ -1,0 +1,36 @@
+##########################################
+From: Srijeyarankesh_JS@comcast.com
+Date: Jun 27, 2025 12:17 PM
+Source: Comcast
+##########################################
+diff --git a/source/hostap-2.9/src/ap/ap_config.h b/source/hostap-2.9/src/ap/ap_config.h
+index 972d54e..47a7e59 100644
+--- a/source/hostap-2.9/src/ap/ap_config.h
++++ b/source/hostap-2.9/src/ap/ap_config.h
+@@ -365,7 +365,8 @@ struct hostapd_bss_config {
+ 	enum {
+ 		PSK_RADIUS_IGNORED = 0,
+ 		PSK_RADIUS_ACCEPTED = 1,
+-		PSK_RADIUS_REQUIRED = 2
++		PSK_RADIUS_REQUIRED = 2,
++		PSK_RADIUS_DURING_4WAY_HS = 3,
+ 	} wpa_psk_radius;
+ 	int wpa_pairwise;
+ 	int group_cipher; /* wpa_group value override from configuation */
+@@ -480,6 +481,7 @@ struct hostapd_bss_config {
+ 	char *manufacturer;
+ 	char *model_name;
+ 	char *model_number;
++	char *fw_version;
+ 	char *serial_number;
+ 	u8 device_type[WPS_DEV_TYPE_LEN];
+ 	char *config_methods;
+@@ -842,6 +844,8 @@ struct hostapd_bss_config {
+ 	u8 mka_psk_set;
+ #endif /* CONFIG_MACSEC */
+ 	int connected_building_avp;
++	int mdu;
++	int speed_tier;
+ };
+ 
+ /**

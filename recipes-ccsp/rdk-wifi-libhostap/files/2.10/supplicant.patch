@@ -1,0 +1,116 @@
+Index: git/source/hostap-2.10/src/Makefile.am
+===================================================================
+--- git.orig/source/hostap-2.10/src/Makefile.am
++++ git/source/hostap-2.10/src/Makefile.am
+@@ -79,6 +79,30 @@ libhostap_la_SOURCES += ap/eth_p_oui.c
+ libhostap_la_SOURCES += ap/ctrl_iface_ap.c
+ libhostap_la_SOURCES += ap/greylist.c
+ libhostap_la_SOURCES += ap/wnm_ap.c
++libhostap_la_SOURCES += ../wpa_supplicant/sme.c
++libhostap_la_SOURCES += ../wpa_supplicant/wmm_ac.c
++libhostap_la_SOURCES += ../wpa_supplicant/rrm_test.c
++libhostap_la_SOURCES += ../wpa_supplicant/wps_supplicant.c
++libhostap_la_SOURCES += ../wpa_supplicant/wpas_glue.c
++libhostap_la_SOURCES += ../wpa_supplicant/interworking.c
++libhostap_la_SOURCES += ../wpa_supplicant/op_classes.c
++libhostap_la_SOURCES += ../wpa_supplicant/events.c
++libhostap_la_SOURCES += ../wpa_supplicant/hs20_supplicant.c
++libhostap_la_SOURCES += ../wpa_supplicant/scan.c
++libhostap_la_SOURCES += ../wpa_supplicant/bss.c
++libhostap_la_SOURCES += ../wpa_supplicant/notify.c
++libhostap_la_SOURCES += ../wpa_supplicant/wpa_supplicant.c
++libhostap_la_SOURCES += ../wpa_supplicant/robust_av.c
++libhostap_la_SOURCES += ../wpa_supplicant/bssid_ignore.c
++libhostap_la_SOURCES += ../wpa_supplicant/mbo.c
++libhostap_la_SOURCES += ../wpa_supplicant/wnm_sta.c
++libhostap_la_SOURCES += ../wpa_supplicant/config.c
++libhostap_la_SOURCES += ../wpa_supplicant/gas_query.c
++libhostap_la_SOURCES += ../wpa_supplicant/offchannel.c
++libhostap_la_SOURCES += ../wpa_supplicant/config_file_wpa_sup.c
++libhostap_la_SOURCES += ../wpa_supplicant/eap_register_wpa_sup.c
++libhostap_la_SOURCES += utils/bitfield.c
++libhostap_la_SOURCES += utils/config_utils.c
+ 
+ libhostap_la_SOURCES += radius/radius.c
+ libhostap_la_SOURCES += radius/radius_client.c
+@@ -190,7 +214,7 @@ libhostap_la_SOURCES += crypto/aes-siv.c
+ #libhostap_la_SOURCES += crypto/aes-wrap.c
+ #libhostap_la_SOURCES += crypto/aes-unwrap.c
+ #libhostap_la_SOURCES += crypto/rc4.c
+-libhostap_la_SOURCES += crypto/tls_none.c
++#libhostap_la_SOURCES += crypto/tls_none.c
+ #libhostap_la_SOURCES += crypto/tls_internal.c
+ libhostap_la_SOURCES += crypto/ms_funcs.c
+ libhostap_la_SOURCES += crypto/dh_groups.c
+@@ -216,7 +240,7 @@ libhostap_la_SOURCES += crypto/sha384-kd
+ libhostap_la_SOURCES += crypto/sha512-kdf.c
+ libhostap_la_SOURCES += crypto/sha512-prf.c
+ #libhostap_la_SOURCES += crypto/fips_prf_internal.c
+-#libhostap_la_SOURCES += crypto/tls_openssl.c
++libhostap_la_SOURCES += crypto/tls_openssl.c
+ libhostap_la_SOURCES += crypto/crypto_openssl.c
+ 
+ #libhostap_la_SOURCES += crypto/dh_group5.c
+Index: git/source/hostap-2.10/src/drivers/driver.h
+===================================================================
+--- git.orig/source/hostap-2.10/src/drivers/driver.h
++++ git/source/hostap-2.10/src/drivers/driver.h
+@@ -6191,6 +6191,8 @@ union wpa_event_data {
+ void wpa_supplicant_event(void *ctx, enum wpa_event_type event,
+ 			  union wpa_event_data *data);
+ 
++void wpa_supplicant_event_wpa(void *ctx, enum wpa_event_type event,
++              union wpa_event_data *data);
+ /**
+  * wpa_supplicant_event_global - Report a driver event for wpa_supplicant
+  * @ctx: Context pointer (wpa_s); this is the ctx variable registered
+Index: git/source/hostap-2.10/wpa_supplicant/events.c
+===================================================================
+--- git.orig/source/hostap-2.10/wpa_supplicant/events.c
++++ git/source/hostap-2.10/wpa_supplicant/events.c
+@@ -4952,7 +4952,7 @@ static void wpas_event_unprot_beacon(str
+ }
+ 
+ 
+-void wpa_supplicant_event(void *ctx, enum wpa_event_type event,
++void wpa_supplicant_event_wpa(void *ctx, enum wpa_event_type event,
+ 			  union wpa_event_data *data)
+ {
+ 	struct wpa_supplicant *wpa_s = ctx;
+@@ -5811,7 +5811,7 @@ void wpa_supplicant_event(void *ctx, enu
+ }
+ 
+ 
+-void wpa_supplicant_event_global(void *ctx, enum wpa_event_type event,
++void wpa_supplicant_event_global_wpa(void *ctx, enum wpa_event_type event,
+ 				 union wpa_event_data *data)
+ {
+ 	struct wpa_supplicant *wpa_s;
+Index: git/source/hostap-2.10/wpa_supplicant/sme.c
+===================================================================
+--- git.orig/source/hostap-2.10/wpa_supplicant/sme.c
++++ git/source/hostap-2.10/wpa_supplicant/sme.c
+@@ -320,7 +320,7 @@ static void sme_auth_handle_rrm(struct w
+ }
+ 
+ 
+-static void sme_send_authentication(struct wpa_supplicant *wpa_s,
++void sme_send_authentication(struct wpa_supplicant *wpa_s,
+ 				    struct wpa_bss *bss, struct wpa_ssid *ssid,
+ 				    int start)
+ {
+Index: git/source/hostap-2.10/wpa_supplicant/sme.h
+===================================================================
+--- git.orig/source/hostap-2.10/wpa_supplicant/sme.h
++++ git/source/hostap-2.10/wpa_supplicant/sme.h
+@@ -43,7 +43,9 @@ void sme_external_auth_trigger(struct wp
+ 			       union wpa_event_data *data);
+ void sme_external_auth_mgmt_rx(struct wpa_supplicant *wpa_s,
+ 			       const u8 *auth_frame, size_t len);
+-
++void sme_send_authentication(struct wpa_supplicant *wpa_s,
++                    struct wpa_bss *bss, struct wpa_ssid *ssid,
++                    int start);
+ #else /* CONFIG_SME */
+ 
+ static inline void sme_authenticate(struct wpa_supplicant *wpa_s,

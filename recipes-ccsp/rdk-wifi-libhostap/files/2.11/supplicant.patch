@@ -1,0 +1,90 @@
+Index: git/source/hostap-2.11/src/drivers/driver.h
+===================================================================
+--- git.orig/source/hostap-2.11/src/drivers/driver.h
++++ git/source/hostap-2.11/src/drivers/driver.h
+@@ -6794,6 +6794,8 @@ union wpa_event_data {
+ void wpa_supplicant_event(void *ctx, enum wpa_event_type event,
+ 			  union wpa_event_data *data);
+ 
++void wpa_supplicant_event_wpa(void *ctx, enum wpa_event_type event,
++              union wpa_event_data *data);
+ /**
+  * wpa_supplicant_event_global - Report a driver event for wpa_supplicant
+  * @ctx: Context pointer (wpa_s); this is the ctx variable registered
+Index: git/source/hostap-2.11/wpa_supplicant/events.c
+===================================================================
+--- git.orig/source/hostap-2.11/wpa_supplicant/events.c
++++ git/source/hostap-2.11/wpa_supplicant/events.c
+@@ -5920,7 +5920,7 @@ static void wpas_link_reconfig(struct wpa_supplicant *wpa_s)
+ }
+ 
+ 
+-void wpa_supplicant_event(void *ctx, enum wpa_event_type event,
++void wpa_supplicant_event_wpa(void *ctx, enum wpa_event_type event,
+ 			  union wpa_event_data *data)
+ {
+ 	struct wpa_supplicant *wpa_s = ctx;
+@@ -6854,7 +6854,7 @@ void wpa_supplicant_event(void *ctx, enu
+ }
+ 
+ 
+-void wpa_supplicant_event_global(void *ctx, enum wpa_event_type event,
++void wpa_supplicant_event_global_wpa(void *ctx, enum wpa_event_type event,
+ 				 union wpa_event_data *data)
+ {
+ 	struct wpa_supplicant *wpa_s;
+Index: git/source/hostap-2.11/wpa_supplicant/sme.c
+===================================================================
+--- git.orig/source/hostap-2.11/wpa_supplicant/sme.c
++++ git/source/hostap-2.11/wpa_supplicant/sme.c
+@@ -542,7 +542,7 @@ static void wpas_sme_set_mlo_links(struct wpa_supplicant *wpa_s,
+ }
+ 
+ 
+-static void sme_send_authentication(struct wpa_supplicant *wpa_s,
++void sme_send_authentication(struct wpa_supplicant *wpa_s,
+ 				    struct wpa_bss *bss, struct wpa_ssid *ssid,
+ 				    int start)
+ {
+Index: git/source/hostap-2.11/wpa_supplicant/sme.h
+===================================================================
+--- git.orig/source/hostap-2.11/wpa_supplicant/sme.h
++++ git/source/hostap-2.11/wpa_supplicant/sme.h
+@@ -43,7 +43,9 @@ void sme_external_auth_trigger(struct wp
+ 			       union wpa_event_data *data);
+ void sme_external_auth_mgmt_rx(struct wpa_supplicant *wpa_s,
+ 			       const u8 *auth_frame, size_t len);
+-
++void sme_send_authentication(struct wpa_supplicant *wpa_s,
++                    struct wpa_bss *bss, struct wpa_ssid *ssid,
++                    int start);
+ #else /* CONFIG_SME */
+ 
+ static inline void sme_authenticate(struct wpa_supplicant *wpa_s,
+Index: git/source/hostap-2.11/wpa_supplicant/bss.h
+===================================================================
+--- git.orig/source/hostap-2.11/wpa_supplicant/bss.h
++++ git/source/hostap-2.11/wpa_supplicant/bss.h
+@@ -130,4 +130,4 @@ struct wpa_bss {
+	/** An array of MLD links */
+	u8 n_mld_links;
+-	struct mld_link {
++	struct mld_link_wpa {
+		u8 link_id;
+Index: git/source/hostap-2.11/wpa_supplicant/bss.c
+===================================================================
+--- git.orig/source/hostap-2.11/wpa_supplicant/bss.c
++++ git/source/hostap-2.11/wpa_supplicant/bss.c
+@@ -1545,5 +1545,5 @@ wpa_bss_parse_ml_rnr_ap_info(struct wpa_supplicant *wpa_s,
+				   !wpa_bssid_ignore_is_listed(
+					   wpa_s, neigh_bss->bssid)) {
+-				struct mld_link *l;
++				struct mld_link_wpa *l;
+
+				l = &bss->mld_links[bss->n_mld_links];
+@@ -1610,4 +1610,4 @@ int wpa_bss_parse_basic_ml_element(struct wpa_supplicant *wpa_s,
+	int ret = -1;
+-	struct mld_link *l;
++	struct mld_link_wpa *l;
+
+	if (ieee802_11_parse_elems(ies_pos, ies_len, &elems, 1) ==

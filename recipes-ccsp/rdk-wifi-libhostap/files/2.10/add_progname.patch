@@ -1,0 +1,41 @@
+Index: git/source/hostap-2.10/src/utils/wpa_debug.c
+===================================================================
+--- git.orig/source/hostap-2.10/src/utils/wpa_debug.c
++++ git/source/hostap-2.10/src/utils/wpa_debug.c
+@@ -211,6 +211,9 @@ void wpa_printf(int level, const char *f
+ 	va_list ap;
+ 
+     FILE *fpg = NULL;
++    extern char *__progname;
++    char prog_name[64] = {0};
++    snprintf(&prog_name[0], sizeof(prog_name), "[%s] ", __progname ? __progname : "");
+ 
+     va_start(ap, fmt);
+ 
+@@ -220,6 +223,8 @@ void wpa_printf(int level, const char *f
+             return;
+         }
+ 
++        fprintf(fpg, "%s", prog_name);
++
+         vfprintf(fpg, fmt, ap);
+         va_end(ap);
+         fprintf(fpg, "\n");
+@@ -282,6 +287,9 @@ static void _wpa_hexdump(int level, cons
+ {
+ 	size_t i;
+ 	static FILE *fpg = NULL;
++    extern char *__progname;
++    char prog_name[64] = {0};
++    snprintf(&prog_name[0], sizeof(prog_name), "[%s] ", __progname ? __progname : "");
+ 
+ 	if ((access("/nvram/wifiLibhostapDbg", R_OK)) == 0) {
+ 		if (fpg == NULL) {
+@@ -291,6 +299,7 @@ static void _wpa_hexdump(int level, cons
+ 			}
+ 	    	}
+ 
++            fprintf(fpg, "%s", prog_name);
+ 	    	fprintf(fpg, "%s - hexdump(len=%lu):", title, (unsigned long) len);
+ 
+ 	    	if (buf == NULL) {
